@@ -1,0 +1,46 @@
+.final-wrapper {
+  background-color: #050505; /* El negro abisal que mencionamos */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.final-container {
+  text-align: center;
+  max-width: 80%;
+}
+
+.final-texto {
+  color: #e3dcc8; 
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  line-height: 1.5;
+  animation: final-aparicion 0.4s ease-out forwards;
+}
+
+.final-eco {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.final-climax {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+@keyframes final-aparicion {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

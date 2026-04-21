@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;1,400&display=swap');
+
+:root {
+  /* Volvemos a la paleta gótica armónica */
+  --ofelia-bg-abisal: #03120E; /* Verde cripta profundo */
+  --ofelia-texto-cine: #e3dcc8; /* Color hueso/lino */
+  --ofelia-sombra-texto: rgba(0, 0, 0, 0.9);
+  
+  /* UNIFICAMOS TIPOGRAFÍA: Solo Mono */
+  --ofelia-fuente-ciber: 'IBM Plex Mono', monospace;
+}
+
+.ofelia-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  background-color: var(--ofelia-bg-abisal);
+  overflow: hidden;
+  font-family: var(--ofelia-fuente-ciber); /* Aplicada a todo el wrapper */
+}
+
+/* Estilo base para los subtítulos iniciales (abajo der) */
+.ofelia-subtitulo {
+  position: absolute;
+  bottom: 8%;
+  right: 8%;
+  font-size: 3rem;
+  color: var(--ofelia-texto-cine);
+  font-weight: 400;
+  font-style: italic; /* Mantenemos el itálico para 'descanso' */
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 8px var(--ofelia-sombra-texto);
+  z-index: 10;
+  margin: 0;
+}
+
+/* --- IMAGEN Y PARPADEO BRUTALISTA --- */
+/* Modificá esta parte en tu CSS */
+.ofelia-imagen-parpadeo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 900px;
+  z-index: 1;
+  mix-blend-mode: lighten; /* Más suave que screen para algo museístico */
+  filter: grayscale(80%) contrast(120%);
+  
+  /* Animación de 4 segundos que termina en opacidad 0 (apagón seco) */
+  animation: ofelia-proyector-fallando 4s forwards steps(1);
+}
+
+@keyframes ofelia-proyector-fallando {
+  0% { opacity: 0; }
+  2% { opacity: 0.3; }
+  4% { opacity: 0; }
+  6% { opacity: 0.7; }
+  10% { opacity: 0; }
+  15% { opacity: 1; filter: grayscale(0%) contrast(100%); } /* Se ve la imagen real */
+  40% { opacity: 0.8; filter: grayscale(50%); }
+  42% { opacity: 0; }
+  45% { opacity: 1; }
+  85% { opacity: 1; }
+  95% { opacity: 0.4; }
+  100% { opacity: 0; } /* Apagón seco final */
+}
+
+
+
+
+
+
+/* --- NUEVA CLASE PARA VOCES CENTRALES --- */
+.ofelia-voz-central {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--ofelia-texto-cine); /* Color hueso unificado */
+  font-weight: 400;
+  font-style: normal; /* Normal, no itálico */
+  letter-spacing: 5px;
+  text-shadow: 2px 2px 8px var(--ofelia-sombra-texto);
+  z-index: 10;
+  margin: 0;
+  text-align: center;
+}
+
+/* MURMURO: Pequeño y difuso */
+.ofelia-murmuro {
+  font-size: 2.5rem;
+  opacity: 0.5;
+  filter: blur(2px);
+  animation: ofelia-vibracion-murmuro 3s infinite alternate;
+}
+
+@keyframes ofelia-vibracion-murmuro {
+  from { 
+    filter: blur(1.5px); 
+    opacity: 0.4; 
+  }
+  to { 
+    filter: blur(3px); 
+    opacity: 0.6; 
+  }
+}
+
+/* CANTO: Un poco más grande y nítido */
+.ofelia-canto {
+  font-size: 4rem;
+  opacity: 0.9;
+}
+/* --- GRITO: EL CLÍMAX BRUTALISTA TOTAL --- */
+
+.ofelia-grito {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  
+  /* --- EL CAMBIO CLAVE --- */
+  /* Bajamos de 110vw a un 60vw o 70vw. 
+     Esto hará que la palabra 'GRITO' sea ancha, ocupe mucho, 
+     pero que al menos 3 o 4 letras entren enteras en la pantalla. */
+  font-size: 45vw !important; /* Probá entre 60 y 70 hasta que te guste */
+  
+  font-weight: 600 !important;
+  font-style: normal !important;
+  letter-spacing: -2vw !important; /* Ajustamos el espaciado también a vw para que sea proporcional */
+  color: white !important;
+  
+  /* Aberración cromática agresiva (Mantenemos) */
+  text-shadow: 
+    -1vw 0 0 #ff007f, /* Usamos vw para que la sombra crezca con la letra */
+    1vw 0 0 #00ffff;
+    
+  z-index: 100 !important;
+  
+  /* Mantenemos tu animación flashera brutalista */
+  animation: ofelia-grito-colapso 0.3s infinite steps(1);
+}
+
+/* Y ajustamos el pico de escala en la animación para que no sea excesivo */
+@keyframes ofelia-grito-colapso {
+  /* ... tus otros pasos ... */
+  
+  /* Paso 5: El salto de escala también lo controlamos */
+  /* Subimos un poquito, ej. de 65vw a 70vw, no a 120vw */
+  32% { opacity: 1; filter: contrast(300%) brightness(3); font-size: 10vw !important; }
+  
+  /* ... resto de pasos ... */
+}
