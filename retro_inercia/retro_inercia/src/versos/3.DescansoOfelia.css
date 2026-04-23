@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;1,400&display=swap');
 
 :root {
-  /* Volvemos a la paleta gótica armónica */
-  --ofelia-bg-abisal: #03120E; /* Verde cripta profundo */
-  --ofelia-texto-cine: #e3dcc8; /* Color hueso/lino */
-  --ofelia-sombra-texto: rgba(0, 0, 0, 0.9);
-  
-  /* UNIFICAMOS TIPOGRAFÍA: Solo Mono */
+  --ofelia-bg-abisal: #03120e;
+  --ofelia-bg-verde: #0a1c16;
+  --ofelia-texto-cine: #e3dcc8;
+  --ofelia-texto-apagado: rgba(227, 220, 200, 0.42);
+  --ofelia-sombra-texto: rgba(0, 0, 0, 0.92);
+
+  --ofelia-acido-suave: #b9d96a;
+  --ofelia-verde-enfermo: #7ca86a;
+  --ofelia-blanco-roto: #f0eadf;
+
   --ofelia-fuente-ciber: 'IBM Plex Mono', monospace;
 }
 
@@ -15,12 +19,45 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  background-color: var(--ofelia-bg-abisal);
+  background:
+    linear-gradient(
+      to bottom,
+      var(--ofelia-bg-verde) 0%,
+      var(--ofelia-bg-abisal) 32%,
+      #010302 100%
+    );
   overflow: hidden;
-  font-family: var(--ofelia-fuente-ciber); /* Aplicada a todo el wrapper */
+  font-family: var(--ofelia-fuente-ciber);
 }
 
-/* Estilo base para los subtítulos iniciales (abajo der) */
+.ofelia-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  mix-blend-mode: screen;
+}
+
+.ofelia-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(70, 110, 80, 0.08) 0%,
+      rgba(0, 0, 0, 0) 35%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+}
+
+/* subtítulos */
+
 .ofelia-subtitulo {
   position: absolute;
   bottom: 8%;
@@ -28,15 +65,22 @@
   font-size: 3rem;
   color: var(--ofelia-texto-cine);
   font-weight: 400;
-  font-style: italic; /* Mantenemos el itálico para 'descanso' */
+  font-style: italic;
   letter-spacing: 3px;
   text-shadow: 2px 2px 8px var(--ofelia-sombra-texto);
   z-index: 10;
   margin: 0;
+  animation: ofelia-subtitulo-aparece 0.15s steps(1) forwards;
 }
 
-/* --- IMAGEN Y PARPADEO BRUTALISTA --- */
-/* Modificá esta parte en tu CSS */
+.ofelia-subtitulo-final {
+  animation:
+    ofelia-subtitulo-aparece 0.15s steps(1) forwards,
+    ofelia-subtitulo-apagado 1.2s ease-out 0.9s forwards;
+}
+
+/* imágenes */
+
 .ofelia-imagen-parpadeo {
   position: absolute;
   top: 50%;
@@ -45,110 +89,215 @@
   width: 80%;
   max-width: 900px;
   z-index: 1;
-  mix-blend-mode: lighten; /* Más suave que screen para algo museístico */
-  filter: grayscale(80%) contrast(120%);
-  
-  /* Animación de 4 segundos que termina en opacidad 0 (apagón seco) */
-  animation: ofelia-proyector-fallando 4s forwards steps(1);
+  mix-blend-mode: lighten;
 }
 
-@keyframes ofelia-proyector-fallando {
-  0% { opacity: 0; }
-  2% { opacity: 0.3; }
-  4% { opacity: 0; }
-  6% { opacity: 0.7; }
-  10% { opacity: 0; }
-  15% { opacity: 1; filter: grayscale(0%) contrast(100%); } /* Se ve la imagen real */
-  40% { opacity: 0.8; filter: grayscale(50%); }
-  42% { opacity: 0; }
-  45% { opacity: 1; }
-  85% { opacity: 1; }
-  95% { opacity: 0.4; }
-  100% { opacity: 0; } /* Apagón seco final */
+.ofelia-imagen-ofelia {
+  filter: grayscale(82%) contrast(118%) brightness(0.82);
+  animation: ofelia-recuerdo-intrusivo 3.2s forwards steps(1);
 }
 
+.ofelia-imagen-rio {
+  width: 84%;
+  max-width: 1050px;
+  filter: saturate(0.9) contrast(1.06) brightness(0.86);
+  animation: ofelia-rio-sostiene 6.8s forwards steps(1);
+}
 
+/* voces sobre el río */
 
-
-
-
-/* --- NUEVA CLASE PARA VOCES CENTRALES --- */
-.ofelia-voz-central {
+.ofelia-voz-rio {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--ofelia-texto-cine); /* Color hueso unificado */
-  font-weight: 400;
-  font-style: normal; /* Normal, no itálico */
-  letter-spacing: 5px;
-  text-shadow: 2px 2px 8px var(--ofelia-sombra-texto);
   z-index: 10;
   margin: 0;
-  text-align: center;
+  color: var(--ofelia-texto-cine);
+  text-shadow: 2px 2px 8px var(--ofelia-sombra-texto);
+  font-style: normal;
+  font-weight: 400;
+  text-transform: none;
 }
 
-/* MURMURO: Pequeño y difuso */
+.ofelia-voz-apagada {
+  color: var(--ofelia-texto-apagado);
+  filter: blur(0.7px);
+}
+
+/* arriba izquierda */
 .ofelia-murmuro {
-  font-size: 2.5rem;
-  opacity: 0.5;
-  filter: blur(2px);
-  animation: ofelia-vibracion-murmuro 3s infinite alternate;
+  top: 11%;
+  left: 8%;
+  font-size: 2.1rem;
+  letter-spacing: 0.18em;
+  opacity: 0.52;
+  filter: blur(1.5px);
+  animation: ofelia-vibracion-murmuro 2.4s infinite alternate;
+}
+
+/* abajo izquierda */
+.ofelia-canto {
+  bottom: 16%;
+  left: 8%;
+  font-size: 3.7rem;
+  letter-spacing: 0.08em;
+  opacity: 0.92;
+  animation: ofelia-canto-entra 0.18s steps(1) forwards;
+  opacity: 0.35;
+  filter: blur(1px);
+}
+
+/* abajo, más peso, tipo descarga */
+.ofelia-grito {
+  bottom: 4.5%;
+  left: 7.5%;
+  font-size: clamp(4.8rem, 9vw, 8.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+  color: var(--ofelia-blanco-roto);
+  text-transform: uppercase;
+ text-shadow:
+    0 0 6px rgba(240,234,223,0.2),
+    -0.03em 0 0 rgba(185,217,106,0.12),
+    0.03em 0 0 rgba(124,168,106,0.08);
+  animation:
+    ofelia-grito-rayo 0.45s steps(1) infinite,
+    ofelia-grito-entra 0.12s steps(1) forwards;
+  animation: grito-ruptura 0.25s steps(2) infinite;
+}
+
+/* keyframes */
+@keyframes grito-ruptura {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-1px); }
+  100% { transform: translateX(1px); }
+}
+
+
+@keyframes ofelia-subtitulo-aparece {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes ofelia-subtitulo-apagado {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(1.2px);
+  }
+}
+
+/* ofelia como recuerdo que asalta */
+@keyframes ofelia-recuerdo-intrusivo {
+  0% { opacity: 0; }
+  4% { opacity: 0.35; }
+  7% { opacity: 0; }
+  11% { opacity: 0.8; }
+  15% { opacity: 0; }
+  22% { opacity: 1; filter: grayscale(30%) contrast(100%) brightness(0.95); }
+  58% { opacity: 1; }
+  61% { opacity: 0; }
+  66% { opacity: 1; }
+  86% { opacity: 0.86; }
+  100% { opacity: 0; }
+}
+
+/* el río entra y sostiene mientras cambian las voces */
+@keyframes ofelia-rio-sostiene {
+  0% { opacity: 0; }
+  6% { opacity: 0.6; }
+  10% { opacity: 1; }
+  100% { opacity: 1; }
 }
 
 @keyframes ofelia-vibracion-murmuro {
-  from { 
-    filter: blur(1.5px); 
-    opacity: 0.4; 
+  from {
+    filter: blur(1.2px);
+    opacity: 0.4;
+    transform: translateX(0);
   }
-  to { 
-    filter: blur(3px); 
-    opacity: 0.6; 
+  to {
+    filter: blur(2.4px);
+    opacity: 0.58;
+    transform: translateX(2px);
   }
 }
 
-/* CANTO: Un poco más grande y nítido */
-.ofelia-canto {
-  font-size: 4rem;
-  opacity: 0.9;
-}
-/* --- GRITO: EL CLÍMAX BRUTALISTA TOTAL --- */
-
-.ofelia-grito {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  
-  /* --- EL CAMBIO CLAVE --- */
-  /* Bajamos de 110vw a un 60vw o 70vw. 
-     Esto hará que la palabra 'GRITO' sea ancha, ocupe mucho, 
-     pero que al menos 3 o 4 letras entren enteras en la pantalla. */
-  font-size: 45vw !important; /* Probá entre 60 y 70 hasta que te guste */
-  
-  font-weight: 600 !important;
-  font-style: normal !important;
-  letter-spacing: -2vw !important; /* Ajustamos el espaciado también a vw para que sea proporcional */
-  color: white !important;
-  
-  /* Aberración cromática agresiva (Mantenemos) */
-  text-shadow: 
-    -1vw 0 0 #ff007f, /* Usamos vw para que la sombra crezca con la letra */
-    1vw 0 0 #00ffff;
-    
-  z-index: 100 !important;
-  
-  /* Mantenemos tu animación flashera brutalista */
-  animation: ofelia-grito-colapso 0.3s infinite steps(1);
+@keyframes ofelia-canto-entra {
+  0% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  100% {
+    opacity: 0.92;
+    transform: translateX(0);
+  }
 }
 
-/* Y ajustamos el pico de escala en la animación para que no sea excesivo */
-@keyframes ofelia-grito-colapso {
-  /* ... tus otros pasos ... */
-  
-  /* Paso 5: El salto de escala también lo controlamos */
-  /* Subimos un poquito, ej. de 65vw a 70vw, no a 120vw */
-  32% { opacity: 1; filter: contrast(300%) brightness(3); font-size: 10vw !important; }
-  
-  /* ... resto de pasos ... */
+@keyframes ofelia-grito-entra {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* grito como trueno/descarga, no como cartel gigante */
+@keyframes ofelia-grito-rayo {
+  0% {
+    opacity: 0.95;
+    filter: brightness(1) contrast(1);
+    text-shadow:
+      0 0 8px rgba(240, 234, 223, 0.14),
+      -0.04em 0 0 rgba(185, 217, 106, 0.14),
+      0.04em 0 0 rgba(124, 168, 106, 0.1);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translateX(1px);
+  }
+
+  22% {
+    opacity: 0.7;
+    transform: translateX(-1px);
+  }
+
+  28% {
+    opacity: 1;
+    filter: brightness(1.22) contrast(1.25);
+    text-shadow:
+      0 0 14px rgba(240, 234, 223, 0.2),
+      -0.055em 0 0 rgba(185, 217, 106, 0.18),
+      0.055em 0 0 rgba(124, 168, 106, 0.14);
+  }
+
+  52% {
+    opacity: 0.96;
+    transform: translateX(0);
+  }
+
+  58% {
+    opacity: 0.82;
+    filter: brightness(0.95) contrast(1.08);
+  }
+
+  64% {
+    opacity: 1;
+    filter: brightness(1.28) contrast(1.35);
+  }
+
+  100% {
+    opacity: 0.95;
+    filter: brightness(1) contrast(1.05);
+    text-shadow:
+      0 0 9px rgba(240, 234, 223, 0.16),
+      -0.04em 0 0 rgba(185, 217, 106, 0.15),
+      0.04em 0 0 rgba(124, 168, 106, 0.1);
+  }
 }
