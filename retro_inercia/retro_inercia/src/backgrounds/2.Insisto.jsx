@@ -2,7 +2,7 @@ export const sketch = (p5) => {
   let particulas = [];
   let nivelDensidad = 0;
 
-  const MAX_PARTICULAS = 260;
+  const MAX_PARTICULAS = 100;
   const CARACTERES = "{insisto insisto ja kpptn kdknsfjk ahotjgsnf}[]();:,.<>/?!|&#@$%-+=_*~0123456789".split("");
 
   const PALETA = [
@@ -25,7 +25,7 @@ export const sketch = (p5) => {
       opacidad: tipo === "grande" ? p5.random(18, 40) : p5.random(35, 95),
       ruidoMovimiento: p5.random(1000),
       amplitudX: tipo === "grande" ? p5.random(0.4, 1.2) : p5.random(0.8, 2.2),
-      tamano: tipo === "grande" ? p5.random(72, 120) : p5.random(14, 42),
+     tamano: tipo === "grande" ? p5.random(100, 170) : p5.random(22, 60),
       color: p5.random(PALETA),
       vida: p5.random(220, 520),
       mutacion: tipo === "grande" ? 0.003 : 0.012,

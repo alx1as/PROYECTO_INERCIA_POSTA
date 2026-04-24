@@ -1,45 +1,28 @@
 import "./1.ComoGotas.css";
 import { useEffect, useState } from "react";
 
+
 export default function ComoGotas({ onFinish }) {
-  const [mostrarTexto, setMostrarTexto] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const aparecerTexto = setTimeout(() => {
-      setMostrarTexto(true);
-    }, 1300);
+    const t1 = setTimeout(() => setVisible(true), 800);
+    const t2 = setTimeout(() => onFinish?.(), 5000);
 
-    return () => clearTimeout(aparecerTexto);
-  }, []);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [onFinish]);
 
-  useEffect(() => {
-    if (!mostrarTexto) return;
-
-    const terminarEscena = setTimeout(() => {
-      onFinish?.();
-    }, 5600);
-
-    return () => clearTimeout(terminarEscena);
-  }, [mostrarTexto, onFinish]);
+  if (!visible) return null;
 
   return (
-    <section className="gotas-contenedor">
-      <img
-        className="gotas-imagen"
-        src="/1.ComoGotas.png"
-        alt="Estanque oscuro con renacuajos"
-      />
-
-      <div className="gotas-sombra" />
-      <div className="gotas-niebla" />
-
-      {mostrarTexto && (
-        <div className="gotas-verso">
-          <p>como gotas atrapadas</p>
-          <p>en un estanque</p>
-          <p>lleno de renacuajos</p>
-        </div>
-      )}
+    <section className="gotas">
+      <p>como gotas atrapadas</p>
+      <p>atrapadas</p>
+      <p>en un estanque</p>
+      <p>de renacuajos</p>
     </section>
   );
 }

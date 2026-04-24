@@ -218,8 +218,8 @@
 
 .insisto-texto-principal {
   position: relative;
-  font-size: 5.4rem;
-  font-weight: 400;
+  font-size: 10rem;
+  font-weight: 500;
   color: var(--insisto-cian);
   text-shadow:
     0 0 6px rgba(173, 255, 255, 0.8),
@@ -240,12 +240,12 @@
 .insisto-texto-cierre {
   margin: 0;
   line-height: 1.1;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.04em;
 }
 
 .insisto-texto-verso {
-  font-size: 2rem;
+  font-size: 4rem;
   color: rgba(181, 255, 255, 0.74);
   text-shadow:
     0 0 6px rgba(112, 246, 255, 0.25),
@@ -259,7 +259,7 @@
 }
 
 .insisto-texto-cierre {
-  font-size: 2.3rem;
+  font-size: 5rem;
   color: var(--insisto-blanco-roto);
   text-shadow:
     0 0 10px rgba(255,255,255,0.25),

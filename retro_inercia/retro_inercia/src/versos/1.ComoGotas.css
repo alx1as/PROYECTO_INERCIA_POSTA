@@ -1,119 +1,46 @@
-.gotas-contenedor {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400&display=swap');
+
+body {
+  margin: 0;
   background: #020302;
 }
 
-.gotas-imagen {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.gotas {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  filter: brightness(0.72) contrast(1.1) saturate(0.82);
-  transform: scale(1.04);
-  animation: respiracionEstanque 14s ease-in-out forwards;
-}
+  padding-left: 8vw;
 
-.gotas-sombra {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 46%, transparent 20%, rgba(0, 0, 0, 0.22) 54%, rgba(0, 0, 0, 0.86) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.48), transparent 28%, rgba(0, 0, 0, 0.58));
-}
-
-.gotas-niebla {
-  position: absolute;
-  inset: -8%;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 46% 48%, rgba(210, 220, 205, 0.08), transparent 24%),
-    radial-gradient(circle at 58% 60%, rgba(170, 190, 155, 0.06), transparent 28%);
-  filter: blur(26px);
-  opacity: 0.8;
-  animation: moverNieblaGotas 9s ease-in-out infinite alternate;
-}
-
-.gotas-verso {
-  position: absolute;
-  left: 8vw;
-  bottom: 14vh;
-  z-index: 10;
-
-  color: rgba(225, 228, 216, 0.88);
-  font-family: serif;
-  font-size: clamp(1.5rem, 3vw, 3.6rem);
-  line-height: 1.12;
+  font-family: "Atkinson Hyperlegible Mono", monospace;
+  font-size: clamp(1.6rem, 3vw, 3.2rem);
+  line-height: 1.2;
   letter-spacing: 0.04em;
 
-  opacity: 0;
-  filter: blur(10px);
-  animation: aparecerVersoGotas 2.2s ease forwards;
+  color: rgba(205, 205, 198, 0.75);
+
+  /* leve suciedad visual */
+  filter: blur(0.2px);
 }
 
-.gotas-verso p {
+.gotas p {
   margin: 0;
+  opacity: 0;
+
+  transform: translateY(10px);
+  animation: aparecer 1.2s ease forwards;
 }
 
-.gotas-verso p:nth-child(2) {
-  margin-left: 2.5vw;
-}
+/* delay escalonado */
+.gotas p:nth-child(1) { animation-delay: 0.2s; }
+.gotas p:nth-child(2) { animation-delay: 0.6s; }
+.gotas p:nth-child(3) { animation-delay: 1s; }
+.gotas p:nth-child(4) { animation-delay: 1.4s; }
 
-.gotas-verso p:nth-child(3) {
-  margin-left: 5vw;
-  opacity: 0.82;
-}
-
-@keyframes respiracionEstanque {
-  from {
-    transform: scale(1.04);
-  }
-
-  to {
-    transform: scale(1.09);
-  }
-}
-
-@keyframes aparecerVersoGotas {
-  from {
-    opacity: 0;
-    filter: blur(10px);
-    transform: translateY(24px);
-  }
-
+@keyframes aparecer {
   to {
     opacity: 1;
-    filter: blur(0);
     transform: translateY(0);
-  }
-}
-
-@keyframes moverNieblaGotas {
-  from {
-    opacity: 0.52;
-    transform: translateX(-1.5vw) translateY(1vh);
-  }
-
-  to {
-    opacity: 0.86;
-    transform: translateX(1.5vw) translateY(-1vh);
-  }
-}
-
-@media (max-width: 900px) {
-  .gotas-verso {
-    left: 8vw;
-    right: 8vw;
-    bottom: 12vh;
-    font-size: clamp(1.6rem, 7vw, 3rem);
-  }
-
-  .gotas-verso p:nth-child(2),
-  .gotas-verso p:nth-child(3) {
-    margin-left: 0;
   }
 }

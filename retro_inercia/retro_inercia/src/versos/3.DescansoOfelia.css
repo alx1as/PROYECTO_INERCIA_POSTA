@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;1,400&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Saira+Stencil:wght@300;400;500;700&display=swap');
 :root {
   --ofelia-bg-abisal: #03120e;
   --ofelia-bg-verde: #0a1c16;
@@ -178,6 +178,7 @@
 .ofelia-grito {
   bottom: 4.5%;
   left: 7.5%;
+  font-family: 'Saira Stencil', sans-serif;;
   font-size: clamp(4.8rem, 9vw, 8.2rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
