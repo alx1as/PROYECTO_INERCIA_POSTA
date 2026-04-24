@@ -1,51 +1,112 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./6.TeQuise_Final.css";
 
 export default function TeQuise_Final({ onFinish }) {
-  const [verso, setVerso] = useState(0);
+  const [paso, setPaso] = useState(-1);
+
+  const secuencia = useMemo(
+    () => [
+      {
+        tiempo: 600,
+        clase: "final-lento",
+        lineas: ["SÉ QUE TE QUISE", "Incluso, antes de morir"],
+      },
+      {
+        tiempo: 3200,
+        clase: "final-corte",
+        lineas: ["SÉ QUE TE QUISE", "INCLUSO MUERTA"],
+      },
+      {
+        tiempo: 5200,
+        clase: "final-corte",
+        lineas: ["TE QUISE", "INCLUSO ESTANDO MUERTA"],
+      },
+      {
+        tiempo: 6800,
+        clase: "final-eco",
+        lineas: ["MUERTA"],
+      },
+      {
+        tiempo: 7600,
+        clase: "final-rafaga",
+        lineas: ["MUERTA", "QUERIENDO", "VIVÍA"],
+      },
+      {
+        tiempo: 9800,
+        clase: "final-latido",
+        lineas: ["Y VOLVIENDO A LA VIDA", "POR QUERERTE,", "MORÍA"],
+      },
+      {
+        tiempo: 12400,
+        clase: "final-filoso",
+        lineas: ["Y QUISE MUERTA", "QUE MUERAS EN VIDA"],
+      },
+      {
+        tiempo: 14800,
+        clase: "final-corte",
+        lineas: ["E INCLUSO", "EN LA VIDA MUERTA"],
+      },
+      {
+        tiempo: 16800,
+        clase: "final-quise",
+        lineas: ["QUISE"],
+      },
+      {
+        tiempo: 18400,
+        clase: "final-climax",
+        lineas: ["QUE ME QUIERAS."],
+      },
+      {
+      tiempo: 21000,
+      clase: "final-silencio",
+      lineas: [],
+    },
+    ],
+    []
+  );
 
   useEffect(() => {
-    const tiempos = [
-      1500,  // sé que te quise, incluso, antes de morir
-      4000,  // sé que te quise incluso muerta
-      6500,  // te quise incluso estando muerta
-      8500,  // muerta
-      9500,  // muerta queriendo vivía
-      12000, // y volviendo a la vida por quererte, moría
-      14500, // y quise muerta que mueras en vida
-      17000, // e incluso en la vida muerta
-      19000, // quise
-      21000, // que me quieras.
-      24000  // FIN
-    ];
-
-    const timers = tiempos.map((t, index) => 
-      setTimeout(() => setVerso(index + 1), t)
+    const timers = secuencia.map((item, index) =>
+      setTimeout(() => setPaso(index), item.tiempo)
     );
 
-    return () => timers.forEach(clearTimeout);
-  }, []);
+    const final = setTimeout(() => {
+  onFinish?.();
+}, 26000);
 
-  useEffect(() => {
-    if (verso === 11) {
-      onFinish?.();
-    }
-  }, [verso, onFinish]);
+    return () => {
+      timers.forEach(clearTimeout);
+      clearTimeout(final);
+    };
+  }, [secuencia, onFinish]);
+
+  const actual = paso >= 0 ? secuencia[paso] : null;
 
   return (
-    <section className="final-wrapper">
-      <div className="final-container">
-        {verso === 1 && <p className="final-texto">sé que te quise, incluso, antes de morir</p>}
-        {verso === 2 && <p className="final-texto">sé que te quise incluso muerta</p>}
-        {verso === 3 && <p className="final-texto">te quise incluso estando muerta</p>}
-        {verso === 4 && <p className="final-texto final-eco">muerta</p>}
-        {verso === 5 && <p className="final-texto">muerta queriendo vivía</p>}
-        {verso === 6 && <p className="final-texto">y volviendo a la vida por quererte, moría</p>}
-        {verso === 7 && <p className="final-texto">y quise muerta que mueras en vida</p>}
-        {verso === 8 && <p className="final-texto">e incluso en la vida muerta</p>}
-        {verso === 9 && <p className="final-texto">quise</p>}
-        {verso === 10 && <p className="final-texto final-climax">que me quieras.</p>}
-      </div>
+    <section className={`final-wrapper ${actual ? actual.clase : ""}`}>
+      <div className="final-electricidad" />
+
+      {actual && (
+        <div className="final-container" key={paso}>
+          <div
+            className={`final-texto ${actual.clase}`}
+            data-text={actual.lineas.join(" ")}
+          >
+            {actual.lineas.map((linea, lineaIndex) => (
+              <p className="final-linea" key={lineaIndex}>
+                {linea.split(" ").map((palabra, palabraIndex) => (
+                  <span
+                    key={palabraIndex}
+                    style={{ "--i": palabraIndex }}
+                  >
+                    {palabra}
+                  </span>
+                ))}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

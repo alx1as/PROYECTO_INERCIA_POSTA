@@ -59,7 +59,7 @@ export default function DescansoOfelia({ onFinish }) {
 
       {rioVisible && (
         <img
-          src="/imagen-rio.jpeg"
+          src="/rioIA.png"
           alt="Imagen del río"
           className="ofelia-imagen-parpadeo ofelia-imagen-rio"
         />

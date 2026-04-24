@@ -1,46 +1,456 @@
 .final-wrapper {
-  background-color: #050505; /* El negro abisal que mencionamos */
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.035), transparent 18%),
+    #020203;
+
+  color: rgba(245, 245, 238, 0.94);
+}
+
+.final-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035), transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.012), transparent 1px);
+
+  background-size: 100% 6px, 7px 100%;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+}
+
+.final-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 52% 48%, rgba(255, 255, 255, 0.32), transparent 18%),
+    linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.18) 48%, transparent 56%);
+
+  opacity: 0;
+  animation: relampagosFinal 9s steps(1, end) infinite;
+}
+
+.final-electricidad {
+  position: absolute;
+  inset: -10%;
+  pointer-events: none;
+
+  background:
+    linear-gradient(105deg, transparent 42%, rgba(210, 225, 255, 0.12) 49%, transparent 54%),
+    linear-gradient(72deg, transparent 45%, rgba(255, 255, 255, 0.08) 50%, transparent 55%);
+
+  opacity: 0;
+  filter: blur(1px);
+  animation: electricidadCorte 6s steps(1, end) infinite;
 }
 
 .final-container {
+  position: relative;
+  z-index: 5;
+  width: min(92vw, 1300px);
   text-align: center;
-  max-width: 80%;
 }
 
 .final-texto {
-  color: #e3dcc8; 
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
-  line-height: 1.5;
-  animation: final-aparicion 0.4s ease-out forwards;
+  position: relative;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+  font-size: clamp(2.4rem, 7vw, 8.6rem);
+
+  text-shadow:
+    0 0 12px rgba(255, 255, 255, 0.14),
+    0 0 44px rgba(210, 220, 255, 0.08);
+
+  animation: entradaCortada 620ms steps(1, end) both;
+}
+
+.final-texto::before,
+.final-texto::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.final-texto::before {
+  color: rgba(170, 205, 255, 0.32);
+  transform: translate(3px, -2px);
+  clip-path: inset(0 0 55% 0);
+  animation: glitchArriba 850ms steps(1, end) both;
+}
+
+.final-texto::after {
+  color: rgba(255, 255, 255, 0.26);
+  transform: translate(-3px, 2px);
+  clip-path: inset(54% 0 0 0);
+  animation: glitchAbajo 900ms steps(1, end) both;
+}
+
+.final-linea {
+  margin: 0;
+}
+
+.final-linea span {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0;
+  animation: palabraElectrica 480ms steps(1, end) forwards;
+  animation-delay: calc(var(--i) * 48ms);
+}
+
+/* VARIANTES */
+
+.final-lento {
+  font-size: clamp(2.2rem, 5.8vw, 7rem);
+  letter-spacing: -0.035em;
+}
+
+.final-lento .final-linea span {
+  animation-duration: 900ms;
+  animation-delay: calc(var(--i) * 110ms);
+}
+
+.final-corte {
+  font-size: clamp(2.6rem, 7.5vw, 9rem);
 }
 
 .final-eco {
-  font-style: italic;
-  opacity: 0.6;
+  font-size: clamp(5rem, 18vw, 17rem);
+  letter-spacing: -0.1em;
+  animation:
+    entradaCortada 420ms steps(1, end) both,
+    temblorMuerta 520ms steps(2, end) infinite;
+}
+
+.final-eco::before,
+.final-eco::after {
+  opacity: 0.65;
+}
+
+.final-rafaga {
+  font-size: clamp(3.8rem, 12vw, 13rem);
+  letter-spacing: -0.09em;
+  line-height: 0.8;
+}
+
+.final-rafaga .final-linea span {
+  animation-duration: 220ms;
+  animation-delay: calc(var(--i) * 22ms);
+}
+
+.final-latido {
+  font-size: clamp(2.4rem, 6.5vw, 7.6rem);
+}
+
+.final-latido .final-linea:nth-child(3) {
+  font-size: 1.28em;
+}
+
+.final-filoso {
+  font-size: clamp(2.8rem, 8.2vw, 9.4rem);
+  transform: skewX(-4deg);
+}
+
+.final-quise {
+  font-size: clamp(6rem, 20vw, 18rem);
+  letter-spacing: -0.12em;
+  animation:
+    entradaCortada 380ms steps(1, end) both,
+    golpeQuise 1400ms steps(1, end) forwards;
 }
 
 .final-climax {
-  font-size: 2.5rem;
-  font-weight: 500;
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  font-size: clamp(4.5rem, 14vw, 15rem);
+  letter-spacing: -0.09em;
+  line-height: 0.82;
+  animation:
+    entradaCortada 520ms steps(1, end) both,
+    climaxFinal 2800ms steps(1, end) forwards;
 }
 
-@keyframes final-aparicion {
-  from {
+.final-climax .final-linea span {
+  animation-duration: 160ms;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+/* ANIMACIONES */
+
+@keyframes palabraElectrica {
+  0% {
     opacity: 0;
-    transform: translateY(5px);
+    filter: blur(8px);
+    clip-path: inset(0 100% 0 0);
   }
-  to {
+
+  18% {
     opacity: 1;
-    transform: translateY(0);
+    filter: blur(2px);
+    clip-path: inset(32% 0 44% 0);
+  }
+
+  26% {
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+  }
+
+  39% {
+    opacity: 1;
+    filter: blur(0);
+    clip-path: inset(0 0 0 0);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes entradaCortada {
+  0% {
+    opacity: 0;
+    filter: blur(14px);
+    clip-path: inset(0 100% 0 0);
+  }
+
+  10% {
+    opacity: 1;
+    filter: blur(5px);
+    clip-path: inset(42% 0 38% 0);
+  }
+
+  18% {
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+  }
+
+  28% {
+    opacity: 1;
+    transform: translateX(-8px) skewX(-7deg);
+  }
+
+  36% {
+    opacity: 0.35;
+    transform: translateX(6px) skewX(4deg);
+  }
+
+  52% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) skewX(0);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes glitchArriba {
+  0%, 18%, 40%, 100% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.58;
+    transform: translate(7px, -3px);
+  }
+
+  24% {
+    opacity: 0;
+  }
+
+  42% {
+    opacity: 0.38;
+    transform: translate(-4px, -2px);
+  }
+
+  46% {
+    opacity: 0;
+  }
+}
+
+@keyframes glitchAbajo {
+  0%, 16%, 36%, 100% {
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 0.5;
+    transform: translate(-6px, 4px);
+  }
+
+  22% {
+    opacity: 0;
+  }
+
+  38% {
+    opacity: 0.32;
+    transform: translate(5px, 3px);
+  }
+
+  44% {
+    opacity: 0;
+  }
+}
+
+@keyframes relampagosFinal {
+  0%, 68%, 72%, 80%, 100% {
+    opacity: 0;
+  }
+
+  69% {
+    opacity: 0.72;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  73% {
+    opacity: 0.28;
+  }
+
+  74% {
+    opacity: 0;
+  }
+
+  81% {
+    opacity: 0.42;
+  }
+
+  82% {
+    opacity: 0;
+  }
+}
+
+@keyframes electricidadCorte {
+  0%, 54%, 58%, 92%, 100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  55% {
+    opacity: 0.7;
+    transform: translateX(-2vw);
+  }
+
+  56% {
+    opacity: 0;
+  }
+
+  93% {
+    opacity: 0.42;
+    transform: translateX(2vw);
+  }
+
+  94% {
+    opacity: 0;
+  }
+}
+
+@keyframes temblorMuerta {
+  0%, 100% {
+    transform: translate(0, 0) skewX(0);
+  }
+
+  25% {
+    transform: translate(-6px, 2px) skewX(-3deg);
+  }
+
+  50% {
+    transform: translate(5px, -2px) skewX(2deg);
+  }
+
+  75% {
+    transform: translate(-2px, 1px) skewX(-1deg);
+  }
+}
+
+@keyframes golpeQuise {
+  0% {
+    transform: scale(1);
+  }
+
+  18% {
+    transform: scale(1.06);
+  }
+
+  24% {
+    transform: scale(0.98);
+  }
+
+  42% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes climaxFinal {
+  0% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  14% {
+    filter: blur(1px);
+    transform: scale(1.04);
+  }
+
+  18% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  54% {
+    text-shadow:
+      0 0 18px rgba(255, 255, 255, 0.38),
+      0 0 80px rgba(210, 220, 255, 0.24);
+  }
+
+  100% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .final-container {
+    width: 94vw;
+  }
+
+  .final-texto {
+    font-size: clamp(2.4rem, 12vw, 5.6rem);
+  }
+
+  .final-eco,
+  .final-quise {
+    font-size: clamp(5rem, 25vw, 11rem);
+  }
+
+  .final-climax {
+    font-size: clamp(4rem, 18vw, 9rem);
   }
 }
