@@ -1,53 +1,63 @@
 import "./4.TiempoRossi.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import p5 from "p5";
+import { sketch } from "../backgrounds/4.TiempoRossi.jsx";
 
 export default function TiempoRossi({ onFinish }) {
-  const texto = "¿Era un año largo como un siglo\no un siglo corto\ncomo un día?";
+  const texto = useMemo(
+    () => "¿Era un año largo como un siglo\no un siglo corto\ncomo un día?",
+    []
+  );
+
   const [visible, setVisible] = useState("");
-  const [terminado, setTerminado] = useState(false);
+  const fondoRef = useRef(null);
 
   useEffect(() => {
-    // 1. LÓGICA DE TIPEO
-    if (visible.length < texto.length) {
-      const siguienteCaracter = texto[visible.length];
-      let delay = Math.floor(Math.random() * 120) + 80;
+    const instancia = new p5(sketch, fondoRef.current);
+    return () => instancia.remove();
+  }, []);
 
-      if (visible.length === 0) delay = 1000;
-      if (Math.random() > 0.9) delay += 250;
+  useEffect(() => {
+    if (visible.length >= texto.length) return;
 
-      if (["?", "¿", ",", "."].includes(siguienteCaracter)) {
-        delay += 500;
-      } else if (siguienteCaracter === " ") {
-        delay += 120;
-      } else if (siguienteCaracter === "\n") {
-        delay += 800;
-      }
+    const siguienteCaracter = texto[visible.length];
+    let delay = Math.floor(Math.random() * 55) + 35;
 
-      const timeout = setTimeout(() => {
-        setVisible(texto.slice(0, visible.length + 1));
-      }, delay);
+    if (visible.length === 0) delay = 700;
+    if (Math.random() > 0.9) delay += 120;
 
-      return () => clearTimeout(timeout);
-    } 
-    
-    // 2. LÓGICA DE FINALIZACIÓN (Solo cuando el texto está completo)
-    else if (!terminado) {
-      setTerminado(true);
-      const finalTimeout = setTimeout(() => {
-        onFinish?.();
-      }, 2000); // 2 segundos de calma tras el último caracter
-      return () => clearTimeout(finalTimeout);
-    }
-  }, [visible, terminado, onFinish, texto]);
+    if (["?", "¿", ",", "."].includes(siguienteCaracter)) delay += 180;
+    else if (siguienteCaracter === " ") delay += 30;
+    else if (siguienteCaracter === "\n") delay += 320;
+
+    const timeout = setTimeout(() => {
+      setVisible(texto.slice(0, visible.length + 1));
+    }, delay);
+
+    return () => clearTimeout(timeout);
+  }, [visible, texto]);
+
+  useEffect(() => {
+    if (visible.length !== texto.length) return;
+
+    const finalTimeout = setTimeout(() => {
+      onFinish?.();
+    }, 1600);
+
+    return () => clearTimeout(finalTimeout);
+  }, [visible, texto, onFinish]);
 
   return (
     <section className="rossi-contenedor">
+      <div ref={fondoRef} className="rossi-p5-fondo" />
+
       <div className="rossi-layout">
         <span className="rossi-ref">REF. ROSSI_04</span>
+
         <div className="rossi-typing-area">
           <p>
             {visible}
-            <span className="cursor"></span>
+            {visible.length < texto.length && <span className="cursor"></span>}
           </p>
         </div>
       </div>

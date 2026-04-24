@@ -1,3 +1,4 @@
+/*
 import React, { useState, useCallback } from 'react'; // Importación corregida
 import Insisto from './versos/2.Insisto';
 import DescansoOfelia from './versos/3.DescansoOfelia';
@@ -22,3 +23,12 @@ export default function App() {
     </div>
   );
 }
+
+*/
+import PruebaHumo from "./versos/0.PruebaHumo";
+
+function App() {
+  return <PruebaHumo />;
+}
+
+export default App;

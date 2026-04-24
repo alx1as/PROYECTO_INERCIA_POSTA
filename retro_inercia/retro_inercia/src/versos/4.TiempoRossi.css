@@ -1,85 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 :root {
-  --lino: #D9D2C9; 
-  --tinta: #424040;
+  --rossi-texto: #ddd4c5;
+  --rossi-texto-suave: rgba(221, 212, 197, 0.4);
+  --rossi-linea: rgba(221, 212, 197, 0.16);
+  --rossi-cursor: #ddd4c5;
 }
 
 .rossi-contenedor {
   width: 100vw;
   height: 100vh;
-  background-color: var(--lino);
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
+  background: #0c100e;
 }
 
-/* Grano de fondo animado - Movimiento REDUCIDO */
-.rossi-contenedor::before {
-  content: "";
+.rossi-p5-fondo {
   position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.12;
-  pointer-events: none;
-  /* Animación más lenta y con menos pasos para que sea más sutil */
-  animation: grain 12s steps(6) infinite;
+  inset: 0;
+  z-index: 0;
 }
 
-/* Estructura fija - Línea de color CORREGIDO */
 .rossi-layout {
+  position: relative;
+  z-index: 2;
+  width: min(820px, 74vw);
+  padding-left: 1.7rem;
   display: flex;
   flex-direction: column;
-  /* Cambiado a rgba con la misma opacidad de la referencia */
-  border-left: 1px solid rgba(66, 64, 64, 0.4); 
-  padding-left: 1.5rem;
-  width: 800px; /* Ancho fijo para evitar saltos horizontales */
+  transform: translateX(-36px) translateY(-8px);
+}
+
+.rossi-layout::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 1px;
+  height: 164px;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--rossi-linea) 10%,
+      rgba(221, 212, 197, 0.24) 50%,
+      var(--rossi-linea) 90%,
+      transparent 100%
+    );
+  box-shadow: 0 0 6px rgba(221, 212, 197, 0.03);
 }
 
 .rossi-ref {
   font-family: 'Special Elite', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  /* Este es el color que queríamos que la línea respetara */
-  opacity: 0.4; 
-  margin-bottom: 2rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: var(--rossi-texto-suave);
+  margin-bottom: 2.2rem;
+  text-transform: uppercase;
 }
 
 .rossi-typing-area {
   font-family: 'Special Elite', monospace;
-  font-size: 1.6rem;
-  line-height: 1.4;
-  color: var(--tinta);
+  font-size: clamp(1.8rem, 2.9vw, 3rem);
+  line-height: 1.28;
+  color: var(--rossi-texto);
+  max-width: 760px;
 }
 
 .rossi-typing-area p {
-  white-space: pre-wrap;
   margin: 0;
-  filter: blur(0.4px);
+  white-space: pre-wrap;
+  filter: blur(0.2px);
+  text-shadow:
+    0 0 1px rgba(255,255,255,0.04),
+    0 0 12px rgba(221, 212, 197, 0.025);
 }
 
-/* Cursor de bloque */
 .cursor {
   display: inline-block;
-  width: 10px;
-  height: 1.3rem;
-  background-color: var(--tinta);
-  margin-left: 5px;
+  width: 11px;
+  height: 1.1em;
+  margin-left: 6px;
   vertical-align: middle;
-  animation: blink 0.8s step-end infinite;
+  background: var(--rossi-cursor);
+  opacity: 0.78;
+  box-shadow: 0 0 6px rgba(221, 212, 197, 0.08);
+  animation: rossi-blink 0.85s step-end infinite;
 }
 
-@keyframes blink { 50% { opacity: 0; } }
-
-/* Animación de grano - Movimiento MUCHO MÁS SUTIL */
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  /* Reducido el movimiento a sólo 0.5% - 1% */
-  15% { transform: translate(-0.5%, -0.5%); }
-  35% { transform: translate(0.5%, -1%); }
-  60% { transform: translate(-1%, 0.5%); }
-  85% { transform: translate(0.5%, 1%); }
+@keyframes rossi-blink {
+  50% {
+    opacity: 0;
+  }
 }
